@@ -30,14 +30,11 @@ public class AddConcepts extends AppCompatActivity {
             }
         });
 
-        /*Intent intent = getIntent();
-        String message = intent.getStringExtra("greeting");
-        TextView textView = new TextView(this);
-        textView.setTextSize(40);
-        textView.setText(message);
+        Intent intent = getIntent();
+        String message = intent.getStringExtra("message");
+        if(message != null)
+            concept.setText(message);
 
-        ViewGroup layout = (ViewGroup) findViewById(R.id.activity_add_concepts);
-        layout.addView(textView);*/
     }
 
     @Override

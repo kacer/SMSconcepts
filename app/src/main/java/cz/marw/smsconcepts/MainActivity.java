@@ -1,5 +1,6 @@
 package cz.marw.smsconcepts;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import static android.app.PendingIntent.getActivity;
 
@@ -52,30 +54,33 @@ public class MainActivity extends AppCompatActivity {
 
     public void createConcept(View view) {
         Intent intent = new Intent(this, AddConcepts.class);
+        //intent.putExtra("message", "Zpráva k editaci");
         startActivity(intent);
     }
 
     private void createItems() {
         conceptsWrapper.removeAllViews();
-        //ScrollView sc = new ScrollView(this); ZBYTECNE
-        for(final Concept c : DataManager.getInstance().getConcepts()) {
+        List<Concept> concepts = DataManager.getInstance().getConcepts();
+        for(int i = 0; i < concepts.size(); i++) {
+            final String concept = concepts.get(i).getContent();
             Button item = new Button(this);
-            //item.setMaxLines(1);
+            item.setId(i);
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    createMessage(c.getContent());
+                    createMessage(concept);
                 }
             });
             item.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
                     System.out.println("Long touch");
+                    createLocalMenu(view.getId());
                     return true;
                 }
             });
-            item.setTextAppearance(this, R.style.Concepts);
-            item.setText(c.getContent());
+            //item.setTextAppearance(this, R.style.Concepts);
+            item.setText(concept);
             conceptsWrapper.addView(item);
         }
     }
@@ -87,6 +92,33 @@ public class MainActivity extends AppCompatActivity {
         sendIntent.putExtra("sms_body", message);
 
         startActivity(sendIntent);
+    }
+
+    public void createLocalMenu(final int index) {
+        String[] items = {"Upravit", "Smazat"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Co chceš dělat?")
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if(i == 0) {
+                            editContept(index);
+                        } else if(i == 1) {
+                            removeConcept(index);
+                        }
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void editContept(int index) {
+        System.out.println(index);
+    }
+
+    public void removeConcept(int index) {
+        System.out.println(index);
     }
 
 }
