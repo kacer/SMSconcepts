@@ -12,8 +12,10 @@ import android.widget.EditText;
 
 public class AddConcepts extends AppCompatActivity {
 
-    private EditText concept;
+    private EditText etConcept;
     private Button btnThrow;
+
+    private Concept concept;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +23,7 @@ public class AddConcepts extends AppCompatActivity {
         setContentView(R.layout.activity_add_concepts);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
-        concept = (EditText) findViewById(R.id.dtConcept);
+        etConcept = (EditText) findViewById(R.id.dtConcept);
         btnThrow = (Button) findViewById(R.id.btnThrow);
         btnThrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,10 +33,11 @@ public class AddConcepts extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        String message = intent.getStringExtra("message");
-        if(message != null)
-            concept.setText(message);
-
+        int index = intent.getIntExtra("index", -1);
+        if(index >= 0) {
+            concept = DataManager.getInstance().getConcepts().get(index);
+            etConcept.setText(concept.getContent());
+        }
     }
 
     @Override
@@ -43,7 +46,7 @@ public class AddConcepts extends AppCompatActivity {
     }
 
     public void throwAway() {
-        if(concept.getText().toString().trim().equals("")) {
+        if(etConcept.getText().toString().trim().equals("")) {
             finish();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(AddConcepts.this);
@@ -66,11 +69,16 @@ public class AddConcepts extends AppCompatActivity {
     }
 
     public void saveConcept(View view) {
-        String text = this.concept.getText().toString();
+        String text = this.etConcept.getText().toString();
         if(!text.trim().equals("")) {
             text = text.replace("\n", "");
-            Concept concept = new Concept(text);
-            DataManager.addConcept(concept, this);
+            if(concept == null) {
+                Concept concept = new Concept(text);
+                DataManager.addConcept(concept, this);
+            } else {
+                concept.setContent(text);
+                DataManager.getInstance().save(this);
+            }
             finish();
         }
 

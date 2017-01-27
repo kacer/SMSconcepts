@@ -7,18 +7,13 @@ import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.DragEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
-import static android.app.PendingIntent.getActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         DataManager.loadData(this);
 
         conceptsWrapper = (LinearLayout) findViewById(R.id.conceptsWrapper);
-
     }
 
     @Override
@@ -54,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void createConcept(View view) {
         Intent intent = new Intent(this, AddConcepts.class);
-        //intent.putExtra("message", "Zpráva k editaci");
         startActivity(intent);
     }
 
@@ -74,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
             item.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    System.out.println("Long touch");
                     createLocalMenu(view.getId());
                     return true;
                 }
@@ -114,11 +106,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void editContept(int index) {
-        System.out.println(index);
+        Intent intent = new Intent(this, AddConcepts.class);
+        intent.putExtra("index", index);
+        startActivity(intent);
     }
 
-    public void removeConcept(int index) {
-        System.out.println(index);
+    public void removeConcept(final int index) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Víš co děláš...");
+        builder.setMessage("Fakt to chceš zahodit?");
+        builder.setPositiveButton("Hai", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                Concept concept = DataManager.getInstance().getConcepts().get(index);
+                DataManager.removeConcept(concept, MainActivity.this);
+                createItems();
+            }
+        });
+        builder.setNegativeButton("Iie", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
 }

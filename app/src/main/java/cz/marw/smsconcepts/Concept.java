@@ -1,5 +1,6 @@
 package cz.marw.smsconcepts;
 
+
 /**
  * Created by Martinek on 18. 1. 2017.
  */

@@ -85,7 +85,9 @@ public class DataManager {
     }
 
     public static void loadData(Context context) {
-        getInstance().load(context);
+        if(getInstance().getConcepts().isEmpty()) {
+            getInstance().load(context);
+        }
     }
 
 }
