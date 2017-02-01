@@ -31,14 +31,15 @@
             android:singleLine="false"
             android:selectAllOnFocus="false"
             android:layout_alignParentBottom="true"
-            android:hint="Sem příjde koncept"
+            android:hint="Sem přijde koncept"
             android:padding="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
-            android:gravity="top"
             android:minLines="5"
-            android:maxLines="15" />
+            android:maxLines="15"
+            android:fadeScrollbars="false"
+            android:gravity="top" />
     </FrameLayout>
 
     <LinearLayout
@@ -53,16 +54,24 @@
             android:text="Uložit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_save_concept_style"
             android:id="@+id/btnSave"
             android:layout_weight="1"
-            android:onClick="saveConcept"/>
+            android:onClick="saveConcept"
+            android:minHeight="55dip"
+            android:textColor="@android:color/background_light"
+            android:textStyle="normal|bold" />
 
         <Button
             android:text="Zahodit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_throw_concept_style"
             android:id="@+id/btnThrow"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:minHeight="55dip"
+            android:textColor="@android:color/background_light"
+            android:textStyle="normal|bold" />
 
     </LinearLayout>
 

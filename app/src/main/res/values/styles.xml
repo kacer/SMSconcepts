@@ -6,13 +6,13 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:windowBackground">@drawable/gradient_background</item>
     </style>
 
-    <style name="Concepts">
-        <item name="android:textColor">#ABCDEF</item>
-        <item name="android:minHeight">75dip</item>
-        <item name="android:colorBackground">@color/colorItemBackground</item>
+    <style name="Concepts" parent="@style/Widget.AppCompat.Button">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>
