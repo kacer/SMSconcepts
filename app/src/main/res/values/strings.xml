@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">SMS Koncepty</string>
+    <string name="local_menu_title">Co chceš dělat?</string>
+    <string-array name="local_menu_items">
+        <item>Upravit</item>
+        <item>Smazat</item>
+    </string-array>
+    <string name="alert_dialog_title">Víš co děláš...</string>
+    <string name="alert_dialog_message">Fakt to chceš zahodit?</string>
+    <string name="alert_dialog_positive_button">Ano</string>
+    <string name="alert_dialog_negative_button">Ne</string>
+    <string name="about_app_title">O aplikaci</string>
+    <string name="about_app_message">Aplikaci vytvořil Martin Donát © 2017 
+pro Petra Hejduka.</string>
+    <string name="about_app_positive_button">Ok</string>
+    <string name="toast_must_be_filled">Musí být vyplněn koncept i název!</string>
 </resources>

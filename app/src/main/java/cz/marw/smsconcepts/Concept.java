@@ -6,9 +6,11 @@ package cz.marw.smsconcepts;
  */
 public class Concept {
 
+    private String name;
     private String content;
 
-    public Concept(String content) {
+    public Concept(String name, String content) {
+        this.name = name;
         this.content = content;
     }
 
@@ -18,5 +20,13 @@ public class Concept {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

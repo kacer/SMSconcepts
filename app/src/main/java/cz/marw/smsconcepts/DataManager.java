@@ -32,7 +32,7 @@ public class DataManager {
         try {
             FileWriter writer = new FileWriter(context.getFilesDir() + System.getProperty("file.separator") + FILE_NAME);
             for(Concept c : concepts) {
-                writer.write(c.getContent() + DELIMITER);
+                writer.write(c.getName() + DELIMITER + c.getContent());
                 writer.write(System.lineSeparator());
             }
             writer.flush();
@@ -50,7 +50,9 @@ public class DataManager {
                 String row;
                 while((row = reader.readLine()) != null) {
                     StringTokenizer st = new StringTokenizer(row, DELIMITER);
-                    concepts.add(new Concept(st.nextToken()));
+                    String name = st.nextToken();
+                    String content = st.nextToken();
+                    concepts.add(new Concept(name, content));
                 }
                 reader.close();
             }

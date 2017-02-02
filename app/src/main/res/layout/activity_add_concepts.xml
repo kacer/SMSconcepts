@@ -21,10 +21,22 @@
 
         <EditText
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:ems="10"
+            android:id="@+id/etName"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="10dp"
+            android:hint="Název"
+            android:background="@android:color/background_light" />
+
+        <EditText
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textMultiLine"
             android:ems="10"
-            android:id="@+id/dtConcept"
+            android:id="@+id/etConcept"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:background="@android:color/background_light"
@@ -35,11 +47,12 @@
             android:padding="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="60dp"
             android:minLines="5"
             android:maxLines="15"
             android:fadeScrollbars="false"
             android:gravity="top" />
+
     </FrameLayout>
 
     <LinearLayout

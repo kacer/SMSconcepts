@@ -4,9 +4,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -89,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
     private void createItems() {
         conceptsWrapper.removeAllViews();
         for(int i = 0; i < concepts.size(); i++) {
+            String name = concepts.get(i).getName();
             final String concept = concepts.get(i).getContent();
             Button item = new Button(this);
             item.setId(i);
@@ -105,11 +108,17 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             });
-            item.setTextAppearance(this, R.style.Concepts);
+            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+                item.setTextAppearance(this, R.style.Concepts);
+            else
+                item.setTextAppearance(R.style.Concepts);
             item.setBackgroundResource(R.drawable.item_concept_style);
+            item.setPadding(40,40,40,40);
+            item.setGravity(Gravity.LEFT);
+            item.setGravity(Gravity.CENTER_VERTICAL);
             item.setHeight(160);
             item.setMaxLines(2);
-            item.setText(concept);
+            item.setText((i + 1) + ". " + name);
             conceptsWrapper.addView(item);
         }
     }
@@ -124,10 +133,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createLocalMenu(final int index) {
-        String[] items = {"Upravit", "Smazat"};
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Co chceš dělat?")
-                .setItems(items, new DialogInterface.OnClickListener() {
+        builder.setTitle(getString(R.string.local_menu_title))
+                .setItems(getResources().getStringArray(R.array.local_menu_items), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if(i == 0) {
@@ -150,9 +158,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void removeConcept(final int index) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Víš co děláš...");
-        builder.setMessage("Fakt to chceš zahodit?");
-        builder.setPositiveButton("Hai", new DialogInterface.OnClickListener() {
+        builder.setTitle(getString(R.string.alert_dialog_title));
+        builder.setMessage(getString(R.string.alert_dialog_message));
+        builder.setPositiveButton(getString(R.string.alert_dialog_positive_button), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
                 Concept concept = concepts.get(index);
@@ -160,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                 onResume();
             }
         });
-        builder.setNegativeButton("Iie", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.alert_dialog_negative_button), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
             }
@@ -171,9 +179,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void deleteAllConcepts() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Víš co děláš...");
-        builder.setMessage("Fakt to chceš zahodit?");
-        builder.setPositiveButton("Hai", new DialogInterface.OnClickListener() {
+        builder.setTitle(getString(R.string.alert_dialog_title));
+        builder.setMessage(getString(R.string.alert_dialog_message));
+        builder.setPositiveButton(getString(R.string.alert_dialog_positive_button), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
                 concepts.clear();
@@ -181,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 onResume();
             }
         });
-        builder.setNegativeButton("Iie", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.alert_dialog_negative_button), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
             }
@@ -192,9 +200,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void aboutApp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("O aplikaci");
-        builder.setMessage("Aplikaci vytvořil Martin Donát \u00a9 2017 \npro Petra Hejduka.");
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setTitle(getString(R.string.about_app_title));
+        builder.setMessage(getString(R.string.about_app_message));
+        builder.setPositiveButton(getString(R.string.about_app_positive_button), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
